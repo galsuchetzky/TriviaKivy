@@ -1,7 +1,12 @@
 import kivy
-import requests
+# import requests
 import json
 import random
+import certifi
+
+# import os
+
+# os.environ.setdefault('SSL_CERT_FILE', certifi.where())
 
 kivy.require('2.1.0')
 
@@ -11,6 +16,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.text import LabelBase
 from kivy.properties import StringProperty
 from kivy.clock import Clock
+from kivy.network.urlrequest import UrlRequest
 
 
 class Question:
@@ -25,12 +31,6 @@ class Question:
             self.answers.append(question_dict[tag][::-1])
 
 
-def get_questions():
-    url = 'https://raw.githubusercontent.com/galsuchetzky/TriviaGame/main/questions/vvv.json'
-    res = requests.get(url)
-    questions_json = res.content.decode()
-    questions = [Question(question) for question in list(json.loads(questions_json).values())]
-    return questions
 
 
 class MainWindow(Screen):
@@ -73,7 +73,7 @@ class GameModeSelectionWindow(Screen):
         manager.current = 'main'
 
     def start_game(self, mode):
-        manager.current = 'game'
+        manager.current = 'load_screen'
 
 
 class GameWindow(Screen):
@@ -94,52 +94,67 @@ class GameWindow(Screen):
         self.correct_answers = 0
 
     def on_pre_enter(self, *args):
-        self.questions = get_questions()
-        # self.num_questions = len(self.questions)
-        # self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
-        # random.shuffle(self.questions)
-        # self.set_question()
+        self.num_questions = len(self.questions)
+        self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
+        random.shuffle(self.questions)
+        self.set_question()
 
     def set_question(self, *args):
-        pass
-        # if not self.questions:
-        #     manager.get_screen('game_score').final_score = str(self.correct_answers) + '/' + str(self.num_questions)
-        #     manager.current = 'game_score'
-        #     return
-        #
-        # self.current_question = self.questions.pop()
-        # self.ids.question.text = self.current_question.question
-        #
-        # for i in range(4):
-        #     self.ids['ans' + str(i)].background_normal = self.default_bg_normal
-        #     self.ids['ans' + str(i)].background_color = self.default_bg_color
-        #     self.ids['ans' + str(i)].text = self.current_question.answers[i]
-        #
-        # self.clicked = False
+        if not self.questions:
+            manager.get_screen('game_score').final_score = str(self.correct_answers) + '/' + str(self.num_questions)
+            manager.current = 'game_score'
+            return
+
+        self.current_question = self.questions.pop()
+        self.ids.question.text = self.current_question.question
+
+        for i in range(4):
+            self.ids['ans' + str(i)].background_normal = self.default_bg_normal
+            self.ids['ans' + str(i)].background_color = self.default_bg_color
+            self.ids['ans' + str(i)].text = self.current_question.answers[i]
+
+        self.clicked = False
 
     def select_answer(self, selected_ans):
-        pass
-        # if self.clicked:
-        #     return
-        # self.clicked = True
-        #
-        # if selected_ans == self.current_question.correct_answer:
-        #     self.ids['ans' + str(selected_ans)].background_normal = ''
-        #     self.ids['ans' + str(selected_ans)].background_color = 0, 1, 0, 1
-        #     self.correct_answers += 1
-        # else:
-        #     self.ids['ans' + str(selected_ans)].background_normal = ''
-        #     self.ids['ans' + str(selected_ans)].background_color = 1, 0, 0, 1
-        #
-        # self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
-        # Clock.schedule_once(self.set_question, 1)
+        if self.clicked:
+            return
+        self.clicked = True
 
+        if selected_ans == self.current_question.correct_answer:
+            self.ids['ans' + str(selected_ans)].background_normal = ''
+            self.ids['ans' + str(selected_ans)].background_color = 0, 1, 0, 1
+            self.correct_answers += 1
+        else:
+            self.ids['ans' + str(selected_ans)].background_normal = ''
+            self.ids['ans' + str(selected_ans)].background_color = 1, 0, 0, 1
+
+        self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
+        Clock.schedule_once(self.set_question, 1)
+
+
+class LoadingWindow(Screen):
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+
+    def on_pre_enter(self, *args):
+        url = 'https://raw.githubusercontent.com/galsuchetzky/TriviaGame/main/questions/vvv.json'
+        req = UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=self.start)
+
+    def start(self, req, *args):
+        print(req.result)
+        questions_json = req.result
+        questions = [Question(question) for question in list(json.loads(questions_json).values())]
+
+        manager.get_screen('game').questions = questions
+        manager.current = 'game'
 
 
 class ScoreWindow(Screen):
     def __init__(self, name):
         super().__init__()
         self.name = name
+
 
 class GameScoreWindow(Screen):
     FINAL_SCORE_TXT = StringProperty("ההצלחה שלך היא:"[::-1])
@@ -168,8 +183,13 @@ kv = Builder.load_file("trivia.kv")
 
 manager = ScreenManager()
 
-screens = [MainWindow(name="main"), GameModeSelectionWindow(name="game_mode_selection"), ScoreWindow(name="score"),
-           SettingsWindow(name="settings"), GameWindow(name="game"), GameScoreWindow(name="game_score")]
+screens = [MainWindow(name="main"),
+           GameModeSelectionWindow(name="game_mode_selection"),
+           ScoreWindow(name="score"),
+           SettingsWindow(name="settings"),
+           GameWindow(name="game"),
+           GameScoreWindow(name="game_score"),
+           LoadingWindow(name="load_screen")]
 
 
 class TriviaApp(App):
