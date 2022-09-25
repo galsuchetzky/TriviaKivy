@@ -1,0 +1,5 @@
+buildozed init # run this in the proejct folder and you get a buildozer.spec file, only change the requirements by need and title, package.name, package.domain
+
+buildozer -v android debug # build the application
+
+buildozer serve # runs an http server where you connect with phone and download the apk and install it.

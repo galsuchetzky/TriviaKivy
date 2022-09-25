@@ -1,0 +1,182 @@
+
+<MainWindow>:
+
+    GridLayout:
+        cols: 1
+        rows: 6
+
+        Label:
+            text: ""
+
+        Label:
+            text: root.WELCOME_TXT
+            font_name: "Arial"
+
+        Button:
+            text: root.PLAY_TXT
+            font_name: "Arial"
+            on_release:
+                root.pass_screen_game_mode_selection()
+
+        Button:
+            text: root.SCORE_TXT
+            font_name: "Arial"
+            on_release:
+                root.pass_screen_score()
+
+        Button:
+            text: root.SETTINGS_TXT
+            font_name: "Arial"
+            on_release:
+                root.pass_screen_settings()
+
+        Button:
+            text: root.EXIT_TXT
+            font_name: "Arial"
+            on_release:
+                root.quit()
+
+
+
+
+<GameModeSelectionWindow>:
+    GridLayout:
+        cols: 1
+        rows: 7
+
+        Label:
+            text: ""
+
+        Label:
+            text: root.GAME_MODE_WELCOME_TXT
+            font_name: "Arial"
+
+        Button:
+            text: root.PRACTICE_TXT
+            font_name: "Arial"
+            on_release:
+                root.start_game(0)
+
+        Button:
+            text: root.EASY_TXT
+            font_name: "Arial"
+            on_release:
+                root.start_game(1)
+
+        Button:
+            text: root.MEDIUM_TXT
+            font_name: "Arial"
+            on_release:
+                root.start_game(2)
+
+        Button:
+            text: root.TIME_MODE_TXT
+            font_name: "Arial"
+            on_release:
+                root.start_game(3)
+
+        Button:
+            text: root.BACK_TXT
+            font_name: "Arial"
+            on_release:
+                root.pass_screen_main()
+
+<GameWindow>:
+    GridLayout:
+        cols: 1
+        rows: 7
+
+        GridLayout:
+            cols: 2
+            rows: 2
+
+            Label:
+                text: root.SUCCESS_TXT
+                font_name: "Arial"
+
+            Label:
+                text: root.TIME_TXT
+                font_name: "Arial"
+
+            Label:
+                id: score
+                text: root.SUCCESS_VALUE_TXT
+                font_name: "Arial"
+
+            Label:
+                text: root.TIME_VALUE_TXT
+                font_name: "Arial"
+
+        Label:
+            id: question
+            text: "QUESTION"
+            font_name: "Arial"
+
+        Label:
+            text: ""
+
+        Button:
+            id: ans0
+            text: ""
+            font_name: "Arial"
+            on_release:
+                root.select_answer(0)
+
+        Button:
+            id: ans1
+            text: ""
+            font_name: "Arial"
+            on_release:
+                root.select_answer(1)
+
+        Button:
+            id: ans2
+            text: ""
+            font_name: "Arial"
+            on_release:
+                root.select_answer(2)
+
+        Button:
+            id: ans3
+            text: ""
+            font_name: "Arial"
+            on_release:
+                root.select_answer(3)
+
+<GameScoreWindow>:
+    GridLayout:
+        cols: 1
+        rows: 4
+
+        Label:
+            text: ""
+
+        Label:
+            text: root.FINAL_SCORE_TXT
+            font_name: "Arial"
+
+        Label:
+            id: score
+            text: ""
+            font_name: "Arial"
+
+        Label:
+            text: ""
+
+<ScoreWindow>:
+    GridLayout:
+        cols: 1
+        rows: 7
+
+
+        Label:
+            text: "Score"
+
+<SettingsWindow> :
+    GridLayout:
+        cols: 1
+        rows: 7
+
+
+        Label:
+            text: "Settings"
