@@ -1,6 +1,10 @@
 
-<MainWindow>:
+<Widget>
+    font_name: "Arial"
+    font_size: "30sp"
+    halign: 'right'
 
+<MainWindow>:
     GridLayout:
         cols: 1
         rows: 6
@@ -11,40 +15,26 @@
         Label:
             id: welcome_label
             text: root.WELCOME_TXT
-            halign: 'right'
-            font_name: "Arial"
-            font_size: "15sp"
 
         Button:
             text: root.PLAY_TXT
-            font_name: "Arial"
-            font_size: "15sp"
             on_release:
                 root.pass_screen('game_mode_selection')
 
         Button:
             text: root.SCORE_TXT
-            font_name: "Arial"
-            font_size: "15sp"
             on_release:
                 root.pass_screen('score')
 
         Button:
             text: root.SETTINGS_TXT
-            font_name: "Arial"
-            font_size: "15sp"
             on_release:
                 root.pass_screen('settings')
 
         Button:
             text: root.EXIT_TXT
-            font_name: "Arial"
-            font_size: "15sp"
             on_release:
                 root.quit()
-
-
-
 
 <GameModeSelectionWindow>:
     GridLayout:
@@ -56,35 +46,29 @@
 
         Label:
             text: root.GAME_MODE_WELCOME_TXT
-            font_name: "Arial"
 
         Button:
             text: root.PRACTICE_TXT
-            font_name: "Arial"
             on_release:
                 root.start_game(0)
 
         Button:
             text: root.EASY_TXT
-            font_name: "Arial"
             on_release:
                 root.start_game(1)
 
         Button:
             text: root.MEDIUM_TXT
-            font_name: "Arial"
             on_release:
                 root.start_game(2)
 
         Button:
             text: root.TIME_MODE_TXT
-            font_name: "Arial"
             on_release:
                 root.start_game(3)
 
         Button:
             text: root.BACK_TXT
-            font_name: "Arial"
             on_release:
                 root.pass_screen_main()
 
@@ -99,34 +83,23 @@
 
             Label:
                 text: root.SUCCESS_TXT
-                font_name: "Arial"
-                font_size: "15sp"
 
             Label:
                 text: root.TIME_TXT
-                font_name: "Arial"
-                font_size: "15sp"
 
             Label:
                 id: score
                 text: root.SUCCESS_VALUE_TXT
-                font_name: "Arial"
-                font_size: "15sp"
 
             Label:
                 id: timer
                 text: root.TIME_VALUE_TXT
-                font_name: "Arial"
-                font_size: "15sp"
 
         Label:
             id: question
             text: "QUESTION"
-            font_name: "Arial"
-            font_size: "15sp"
             text_size: self.width, None
             valign: 'middle'
-            halign: 'right'
             padding_x: 20
 
         Label:
@@ -135,11 +108,8 @@
         Button:
             id: ans0
             text: ""
-            font_name: "Arial"
-            font_size: "15sp"
             text_size: self.width, None
             valign: 'middle'
-            halign: 'right'
             padding_x: 20
             on_release:
                 root.select_answer(0)
@@ -147,11 +117,8 @@
         Button:
             id: ans1
             text: ""
-            font_name: "Arial"
-            font_size: "15sp"
             text_size: self.width, None
             valign: 'middle'
-            halign: 'right'
             padding_x: 20
             on_release:
                 root.select_answer(1)
@@ -159,11 +126,8 @@
         Button:
             id: ans2
             text: ""
-            font_name: "Arial"
-            font_size: "15sp"
             text_size: self.width, None
             valign: 'middle'
-            halign: 'right'
             padding_x: 20
             on_release:
                 root.select_answer(2)
@@ -171,11 +135,8 @@
         Button:
             id: ans3
             text: ""
-            font_name: "Arial"
-            font_size: "15sp"
             text_size: self.width, None
             valign: 'middle'
-            halign: 'right'
             padding_x: 20
             on_release:
                 root.select_answer(3)
@@ -190,12 +151,10 @@
 
         Label:
             text: root.FINAL_SCORE_TXT
-            font_name: "Arial"
 
         Label:
             id: score
             text: ""
-            font_name: "Arial"
 
         Label:
             text: ""
@@ -230,4 +189,5 @@
 
 
         Label:
+            id: ee
             text: "Settings"
