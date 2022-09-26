@@ -10,6 +10,8 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.text import LabelBase
+from kivy.properties import StringProperty
+
 
 from screens import *
 
@@ -18,7 +20,7 @@ class TriviaApp(App):
     """
     This is the application that kivy builds.
     """
-
+    default_font_size = StringProperty("20sp")
     def build(self):
         """
         Adds all the screens to the application.
@@ -31,6 +33,9 @@ class TriviaApp(App):
 
 
 if __name__ == '__main__':
+    # Instantiate the application.
+    app = TriviaApp()
+
     # Load the kv file that describes the structure and layout of the content in the screens.
     kv = Builder.load_file("trivia.kv")
 
@@ -47,7 +52,8 @@ if __name__ == '__main__':
     # Register our font.
     LabelBase.register(name="Arial", fn_regular="arial.ttf")
 
+
+
     # Run the application.
-    appp = TriviaApp()
-    appp.run()
+    app.run()
 

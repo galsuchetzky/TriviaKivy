@@ -5,7 +5,6 @@ kivy.require('2.1.0')
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
-from kivy.app import App
 
 
 
@@ -27,8 +26,7 @@ class MainWindow(Screen):
         pass
 
     def quit(self):
-        self.ids.text_id.font_size = 3
-        # exit()
+        exit()
 
     def pass_screen(self, screen):
         self.manager.current = screen

@@ -1,7 +1,7 @@
 
 <Widget>
     font_name: "Arial"
-    font_size: "20sp"
+    font_size: app.default_font_size
     halign: 'right'
 
 <MainWindow>:
@@ -221,7 +221,7 @@
 <SettingsWindow> :
     GridLayout:
         cols: 1
-        rows: 7
+        rows: 5
 
         canvas.before:
             Rectangle:
@@ -231,5 +231,34 @@
 
 
         Label:
-            id: ee
-            text: "Settings"
+            text: root.SETTINGS_HEADER_TXT
+
+        Label:
+            text: ""
+
+        GridLayout:
+            cols: 3
+            rows: 1
+
+            Button:
+                text: "-"
+                valign: 'middle'
+                padding_x: 20
+                on_release: root.update_font_size(-2)
+
+            Label:
+                text: root.FONT_TXT
+
+            Button:
+                text: "+"
+                valign: 'middle'
+                padding_x: 20
+                on_release: root.update_font_size(2)
+
+        Button:
+            text: root.BACK_TXT
+            on_release:
+                root.pass_screen_main()
+
+        Label:
+            text: ""
