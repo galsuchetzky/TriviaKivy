@@ -95,6 +95,7 @@ class GameWindow(Screen):
 
     def on_pre_enter(self, *args):
         self.num_questions = len(self.questions)
+        self.correct_answers = 0
         self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
         random.shuffle(self.questions)
         self.set_question()
@@ -144,6 +145,7 @@ class LoadingWindow(Screen):
     def start(self, req, *args):
         print(req.result)
         questions_json = req.result
+        print(questions_json)
         questions = [Question(question) for question in list(json.loads(questions_json).values())]
 
         manager.get_screen('game').questions = questions

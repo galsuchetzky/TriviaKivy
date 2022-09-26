@@ -111,6 +111,12 @@
             id: question
             text: "QUESTION"
             font_name: "Arial"
+            size_hint_y: None
+            text_size: self.width, None
+            height: self.texture_size[1]
+            valign: 'middle'
+            halign: 'right'
+            padding_x: 20
 
         Label:
             text: ""
@@ -119,6 +125,11 @@
             id: ans0
             text: ""
             font_name: "Arial"
+            size_hint_y: None
+            text_size: self.width, None
+            valign: 'middle'
+            halign: 'right'
+            padding_x: 20
             on_release:
                 root.select_answer(0)
 
@@ -126,6 +137,11 @@
             id: ans1
             text: ""
             font_name: "Arial"
+            size_hint_y: None
+            text_size: self.width, None
+            valign: 'middle'
+            halign: 'right'
+            padding_x: 20
             on_release:
                 root.select_answer(1)
 
@@ -133,6 +149,11 @@
             id: ans2
             text: ""
             font_name: "Arial"
+            size_hint_y: None
+            text_size: self.width, None
+            valign: 'middle'
+            halign: 'right'
+            padding_x: 20
             on_release:
                 root.select_answer(2)
 
@@ -140,6 +161,11 @@
             id: ans3
             text: ""
             font_name: "Arial"
+            size_hint_y: None
+            text_size: self.width, None
+            valign: 'middle'
+            halign: 'right'
+            padding_x: 20
             on_release:
                 root.select_answer(3)
 
