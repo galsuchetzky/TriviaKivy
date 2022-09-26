@@ -9,30 +9,37 @@
             text: ""
 
         Label:
+            id: welcome_label
             text: root.WELCOME_TXT
+            halign: 'right'
             font_name: "Arial"
+            font_size: "15sp"
 
         Button:
             text: root.PLAY_TXT
             font_name: "Arial"
+            font_size: "15sp"
             on_release:
                 root.pass_screen_game_mode_selection()
 
         Button:
             text: root.SCORE_TXT
             font_name: "Arial"
+            font_size: "15sp"
             on_release:
                 root.pass_screen_score()
 
         Button:
             text: root.SETTINGS_TXT
             font_name: "Arial"
+            font_size: "15sp"
             on_release:
                 root.pass_screen_settings()
 
         Button:
             text: root.EXIT_TXT
             font_name: "Arial"
+            font_size: "15sp"
             on_release:
                 root.quit()
 
@@ -93,27 +100,30 @@
             Label:
                 text: root.SUCCESS_TXT
                 font_name: "Arial"
+                font_size: "15sp"
 
             Label:
                 text: root.TIME_TXT
                 font_name: "Arial"
+                font_size: "15sp"
 
             Label:
                 id: score
                 text: root.SUCCESS_VALUE_TXT
                 font_name: "Arial"
+                font_size: "15sp"
 
             Label:
                 id: timer
                 text: root.TIME_VALUE_TXT
                 font_name: "Arial"
+                font_size: "15sp"
 
         Label:
             id: question
             text: "QUESTION"
             font_name: "Arial"
-            text_size: self.width, None
-            height: self.texture_size[1]
+            font_size: "15sp"
             valign: 'middle'
             halign: 'right'
             padding_x: 20
@@ -125,6 +135,7 @@
             id: ans0
             text: ""
             font_name: "Arial"
+            font_size: "15sp"
             text_size: self.width, None
             valign: 'middle'
             halign: 'right'
@@ -136,6 +147,7 @@
             id: ans1
             text: ""
             font_name: "Arial"
+            font_size: "15sp"
             text_size: self.width, None
             valign: 'middle'
             halign: 'right'
@@ -147,6 +159,7 @@
             id: ans2
             text: ""
             font_name: "Arial"
+            font_size: "15sp"
             text_size: self.width, None
             valign: 'middle'
             halign: 'right'
@@ -158,6 +171,7 @@
             id: ans3
             text: ""
             font_name: "Arial"
+            font_size: "15sp"
             text_size: self.width, None
             valign: 'middle'
             halign: 'right'
