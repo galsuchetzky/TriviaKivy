@@ -20,21 +20,21 @@
             font_name: "Arial"
             font_size: "15sp"
             on_release:
-                root.pass_screen_game_mode_selection()
+                root.pass_screen('game_mode_selection')
 
         Button:
             text: root.SCORE_TXT
             font_name: "Arial"
             font_size: "15sp"
             on_release:
-                root.pass_screen_score()
+                root.pass_screen('score')
 
         Button:
             text: root.SETTINGS_TXT
             font_name: "Arial"
             font_size: "15sp"
             on_release:
-                root.pass_screen_settings()
+                root.pass_screen('settings')
 
         Button:
             text: root.EXIT_TXT
