@@ -138,7 +138,7 @@ class LoadingWindow(Screen):
         self.name = name
 
     def on_pre_enter(self, *args):
-        url = 'https://raw.githubusercontent.com/galsuchetzky/TriviaGame/main/questions/vvv.json'
+        url = 'https://raw.githubusercontent.com/galsuchetzky/TriviaKivy/main/questions/Biology%20test.json'
         req = UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=self.start)
 
     def start(self, req, *args):
