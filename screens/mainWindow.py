@@ -5,7 +5,7 @@ kivy.require('2.1.0')
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
-
+from kivy.core.audio import SoundLoader
 
 
 class MainWindow(Screen):
@@ -21,9 +21,12 @@ class MainWindow(Screen):
         super().__init__()
         self.name = name
 
-    def on_pre_enter(self, *args):
-        print(self.ids)
-        pass
+        self.menu_music = SoundLoader.load('sounds/Menu_Audio.wav')
+        self.menu_music.volume = 0.4
+
+    def on_enter(self, *args):
+        if self.menu_music.status != 'play':
+            self.menu_music.play()
 
     def quit(self):
         exit()

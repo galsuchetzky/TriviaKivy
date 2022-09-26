@@ -7,7 +7,9 @@ kivy.require('2.1.0')
 
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import Screen
+from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
+
 
 
 class GameWindow(Screen):
@@ -30,12 +32,21 @@ class GameWindow(Screen):
         self.mode = 0
         self.max_mistakes = None
         self.current_mistakes = 0
+        self.right_answer_sound = SoundLoader.load('sounds/Right_Answer.wav')
+        self.wrong_answer_sound = SoundLoader.load('sounds/Wrong_Answer.wav')
+
 
     def on_pre_enter(self, *args):
+        # Stop menu music
+        self.manager.get_screen('main').menu_music.stop()
+
+        # Initialize the questions, counters and labels.
         self.num_questions = len(self.questions)
         self.correct_answers = 0
         self.current_mistakes = 0
         self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
+
+        # Set the correct game according to the selected mode.
         if self.mode == 0:
             self.timer = Timer(self.ids.timer)
             self.max_mistakes = None
@@ -53,6 +64,7 @@ class GameWindow(Screen):
         self.ids.timer.text = str(self.timer)
         self.timer.start()
 
+        # Shuffle the questions and set the first question.
         random.shuffle(self.questions)
         self.set_question()
 
@@ -79,10 +91,12 @@ class GameWindow(Screen):
             self.ids['ans' + str(selected_ans)].background_normal = ''
             self.ids['ans' + str(selected_ans)].background_color = 0, 1, 0, 1
             self.correct_answers += 1
+            self.right_answer_sound.play()
         else:
             self.ids['ans' + str(selected_ans)].background_normal = ''
             self.ids['ans' + str(selected_ans)].background_color = 1, 0, 0, 1
             self.current_mistakes += 1
+            self.wrong_answer_sound.play()
 
         self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
         Clock.schedule_once(self.set_question, 1)

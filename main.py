@@ -11,6 +11,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.text import LabelBase
 from kivy.properties import StringProperty
+from kivy.core.audio import SoundLoader
 
 
 from screens import *
@@ -21,6 +22,8 @@ class TriviaApp(App):
     This is the application that kivy builds.
     """
     default_font_size = StringProperty("20sp")
+    click_sound = SoundLoader.load('sounds/Click_Audio.wav')
+
     def build(self):
         """
         Adds all the screens to the application.
@@ -30,6 +33,10 @@ class TriviaApp(App):
             manager.add_widget(screen)
 
         return manager
+
+    def btn_pressed(self):
+        self.click_sound.play()
+
 
 
 if __name__ == '__main__':
