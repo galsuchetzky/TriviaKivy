@@ -1,12 +1,7 @@
 import kivy
-# import requests
 import json
 import random
 import certifi
-
-# import os
-
-# os.environ.setdefault('SSL_CERT_FILE', certifi.where())
 
 kivy.require('2.1.0')
 
@@ -31,6 +26,37 @@ class Question:
             self.answers.append(question_dict[tag][::-1])
 
 
+class Timer:
+    def __init__(self, label, countdown=False, countdown_start_time=0, countdown_callback=None):
+        self.label = label
+        self.countdown = countdown
+        self.time = countdown_start_time if countdown else 0
+        self.countdown_callback = countdown_callback
+        self.running = False
+
+    def start(self):
+        self.running = True
+        Clock.schedule_once(self.update, 1)
+
+    def update(self, *args):
+        if not self.countdown:
+            self.time += 1
+        else:
+            self.time -= 1
+            if not self.time:
+                self.countdown_callback()
+                return
+
+        self.label.text = str(self)
+
+        if self.running:
+            Clock.schedule_once(self.update, 1)
+
+    def stop(self):
+        self.running = False
+
+    def __str__(self):
+        return str((self.time // 60) % 60).zfill(2) + ':' + str(self.time % 60).zfill(2)
 
 
 class MainWindow(Screen):
@@ -92,11 +118,16 @@ class GameWindow(Screen):
         self.questions = None
         self.num_questions = 0
         self.correct_answers = 0
+        self.timer = None
 
     def on_pre_enter(self, *args):
         self.num_questions = len(self.questions)
         self.correct_answers = 0
         self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
+        self.timer = Timer(self.ids.timer)  # set depending on game mode
+        self.ids.timer.text = str(self.timer)
+        self.timer.start()
+
         random.shuffle(self.questions)
         self.set_question()
 
@@ -104,6 +135,7 @@ class GameWindow(Screen):
         if not self.questions:
             manager.get_screen('game_score').final_score = str(self.correct_answers) + '/' + str(self.num_questions)
             manager.current = 'game_score'
+            self.timer.stop()
             return
 
         self.current_question = self.questions.pop()
@@ -143,9 +175,7 @@ class LoadingWindow(Screen):
         req = UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=self.start)
 
     def start(self, req, *args):
-        print(req.result)
         questions_json = req.result
-        print(questions_json)
         questions = [Question(question) for question in list(json.loads(questions_json).values())]
 
         manager.get_screen('game').questions = questions
