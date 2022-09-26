@@ -25,7 +25,7 @@ def fix_string(s):
     strings = []
     tmp = []
     for w in s.split():
-        if get_str_pixel_width(' '.join(tmp + [w]), font_name="arial", font_size=kivy.metrics.sp(15)) > acceptable_width:
+        if get_str_pixel_width(' '.join(tmp + [w]), font_name="arial", font_size=kivy.metrics.sp(20)) > acceptable_width:
             strings.append(tmp[:])
             tmp = []
         tmp.append(w)

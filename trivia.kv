@@ -1,13 +1,19 @@
 
 <Widget>
     font_name: "Arial"
-    font_size: "30sp"
+    font_size: "20sp"
     halign: 'right'
 
 <MainWindow>:
     GridLayout:
         cols: 1
         rows: 6
+
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'Background_texture.png'
 
         Label:
             text: ""
@@ -40,6 +46,12 @@
     GridLayout:
         cols: 1
         rows: 7
+
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'Background_texture.png'
 
         Label:
             text: ""
@@ -76,6 +88,12 @@
     GridLayout:
         cols: 1
         rows: 7
+
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'Background_texture.png'
 
         GridLayout:
             cols: 2
@@ -146,6 +164,12 @@
         cols: 1
         rows: 4
 
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'Background_texture.png'
+
         Label:
             text: ""
 
@@ -164,6 +188,12 @@
         cols: 1
         rows:3
 
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'Background_texture.png'
+
         Label:
             text: ""
 
@@ -178,6 +208,12 @@
         cols: 1
         rows: 7
 
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'Background_texture.png'
+
 
         Label:
             text: "Score"
@@ -186,6 +222,12 @@
     GridLayout:
         cols: 1
         rows: 7
+
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'Background_texture.png'
 
 
         Label:
