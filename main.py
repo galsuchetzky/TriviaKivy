@@ -1,16 +1,17 @@
-import string
-
 import kivy
 import json
 import random
 import certifi
+
+from question import Question
+from utils import fix_string
 
 kivy.require('2.1.0')
 
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.core.text import LabelBase, Label
+from kivy.core.text import LabelBase
 from kivy.properties import StringProperty
 from kivy.clock import Clock
 from kivy.network.urlrequest import UrlRequest
@@ -21,33 +22,6 @@ Notes:
 """
 
 
-class Question:
-    """
-    Represents a question in the game.
-    """
-
-    def __init__(self, question_dict):
-        """
-        Initiates a new question from a python dict of the following format:
-        {
-            "index": 5,
-            "question": "your question here",
-            "correct": 0,
-            "ans0": "a",
-            "ans1": "b",
-            "ans2": "c",
-            "ans3": "d"
-        }
-        :param question_dict: the question dict.
-        """
-        self.index = question_dict["index"]
-        self.question = fix_string(question_dict["question"])
-        self.correct_answer = int(question_dict["correct"])
-        self.answers = []
-
-        for i in range(4):
-            tag = 'ans' + str(i)
-            self.answers.append(fix_string(question_dict[tag]))
 
 
 class Timer:
@@ -83,57 +57,6 @@ class Timer:
         return str((self.time // 60) % 60).zfill(2) + ':' + str(self.time % 60).zfill(2)
 
 
-def is_hebrew(s):
-    for c in s:
-        if 1488 <= ord(c) <= 1514:
-            return True
-
-    return False
-
-
-def get_str_pixel_width(s, **kwargs):
-    return Label(**kwargs).get_extents(s)[0]
-
-
-def fix_string(s):
-    x_size = Window.width
-    acceptable_width = 9 * x_size // 10
-    strings = []
-    tmp = []
-    for w in s.split():
-        if get_str_pixel_width(' '.join(tmp + [w]), font_name="arial", font_size=kivy.metrics.sp(15)) > acceptable_width:
-            strings.append(tmp[:])
-            tmp = []
-        tmp.append(w)
-    if tmp:
-        strings.append(tmp[:])
-
-    # print(Window.size)
-    # print(get_str_pixel_width(s, font_name="arial"))
-    # fixed = s.split()
-    final = []
-    for fixed in strings:
-        tmp = []
-        for i, w in enumerate(fixed):
-            if not is_hebrew(w):
-                all_punc = True
-                for c in w:
-                    if c not in string.punctuation:
-                        all_punc = False
-
-                if all_punc:
-                    w = w[::-1]
-                else:
-                    while w[-1] in string.punctuation:
-                        w = w[-1] + w[:-1]
-            tmp.append(w)
-        fixed = tmp
-        fixed = fixed[::-1]
-        fixed = [w[::-1] if is_hebrew(w) else w for w in fixed]
-        fixed = ' '.join(fixed)
-        final.append(fixed)
-
-    return '\n'.join(final)
 
 
 class MainWindow(Screen):
@@ -148,7 +71,7 @@ class MainWindow(Screen):
     def __init__(self, name):
         super().__init__()
         self.name = name
-        self.ids.welcome_label.text = str(Window.width) + '\n' + str(get_str_pixel_width("שלום, dude לי קוראים Gal. איך קוראים לך??? זה טקסט ארוך בעברית כדי לבדוק האם זה הולך להוריד שורה כמו שצריך אם אני יורד ידנית", font_name="arial", font_size=kivy.metrics.sp(15)))
+        # self.ids.welcome_label.text = str(Window.width) + '\n' + str(get_str_pixel_width("שלום, dude לי קוראים Gal. איך קוראים לך??? זה טקסט ארוך בעברית כדי לבדוק האם זה הולך להוריד שורה כמו שצריך אם אני יורד ידנית", font_name="arial", font_size=kivy.metrics.sp(15)))
 
     def quit(self):
         exit()
