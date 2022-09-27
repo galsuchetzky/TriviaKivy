@@ -37,26 +37,48 @@ def get_str_pixel_width(s, **kwargs):
 
 
 def fix_string(s):
+    """
+    Fixes a string to be rendered correctly by kivy with both hebrew and english.
+    :param s: The initial string to fix.
+    :return: The fixed string.
+    """
+    # Split the text to sentences that fit in the length of the screen.
     x_size = Window.width
     acceptable_width = 9 * x_size // 10
     strings = []
     tmp = []
+
     for w in s.split():
-        if get_str_pixel_width(' '.join(tmp + [w]), font_name="arial", font_size=kivy.metrics.sp(DEFAULT_FONT_SIZE)) > acceptable_width:
+        new_str_width = get_str_pixel_width(' '.join(tmp + [w]),
+                                            font_name=DEFALUT_FONT_NAME,
+                                            font_size=kivy.metrics.sp(DEFAULT_FONT_SIZE))
+        if new_str_width > acceptable_width:
             strings.append(tmp[:])
             tmp = []
         tmp.append(w)
     if tmp:
         strings.append(tmp[:])
 
-    # print(Window.size)
-    # print(get_str_pixel_width(s, font_name="arial"))
-    # fixed = s.split()
+    fliped_braces = {'(': ')', ')': '(', '[': ']', ']': '[', '{': '}', '}': '{'}
     final = []
+    # Fix each sentence.
     for fixed in strings:
         tmp = []
+
+        # For each word, change it correctly.
         for i, w in enumerate(fixed):
-            if not is_hebrew(w):
+            # Flip all braces.
+            for j, c in enumerate(w):
+                if c in fliped_braces:
+                    w = w[:j] + fliped_braces[c] + w[j+1:]
+
+            # Handle Hebrew
+            if is_hebrew(w):
+                w = w[::-1]
+
+            # Handle English and punctuation.
+            else:
+                # If the whole word is punctuation just reverse it.
                 all_punc = True
                 for c in w:
                     if c not in string.punctuation:
@@ -64,14 +86,14 @@ def fix_string(s):
 
                 if all_punc:
                     w = w[::-1]
+
+                # Otherwise reverse only the punctuation.
                 else:
                     while w[-1] in string.punctuation:
                         w = w[-1] + w[:-1]
             tmp.append(w)
-        fixed = tmp
-        fixed = fixed[::-1]
-        fixed = [w[::-1] if is_hebrew(w) else w for w in fixed]
-        fixed = ' '.join(fixed)
-        final.append(fixed)
+
+        # Reverse the sentence as it is rendered backward (from hebrew point of view)
+        final.append(' '.join(tmp[::-1]))
 
     return '\n'.join(final)
