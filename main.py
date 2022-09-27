@@ -15,13 +15,15 @@ from kivy.core.audio import SoundLoader
 
 
 from screens import *
+from defaults import *
 
 
 class TriviaApp(App):
     """
     This is the application that kivy builds.
     """
-    default_font_size = StringProperty("20sp")
+    default_font_size = StringProperty(str(DEFAULT_FONT_SIZE) + "sp")
+    default_font_name = DEFALUT_FONT_NAME
     click_sound = SoundLoader.load('sounds/Click_Audio.wav')
 
     def build(self):
