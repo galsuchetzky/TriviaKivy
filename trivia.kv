@@ -241,14 +241,8 @@
             text: ""
 
         GridLayout:
-            cols: 2
-            rows: 1
-
-            Slider:
-                min: 10
-                max: 40
-                value: default_font_size
-                on_value: root.set_font_size(self.value)
+            cols: 1
+            rows: 2
 
             Label:
                 text_size: self.width, None
@@ -257,22 +251,27 @@
 
                 text: root.FONT_TXT
 
+            Slider:
+                min: 10
+                max: 30
+                value: default_font_size
+                on_value: root.set_font_size(self.value)
+
         GridLayout:
-            cols: 2
-            rows: 1
+            cols: 1
+            rows: 2
+
+            Label:
+                text_size: self.width, None
+                max_lines: 1
+                padding_x: 20
+                text: root.VOLUME_TXT
 
             Slider:
                 id: volume_slider
                 min: 0
                 max: 1
                 on_value: root.set_master_volume(self.value)
-
-            Label:
-                text_size: self.width, None
-                max_lines: 1
-                padding_x: 20
-
-                text: root.FONT_TXT
 
         Label:
             text: ""

@@ -15,7 +15,7 @@ class SettingsWindow(Screen):
     """
     SETTINGS_HEADER_TXT = StringProperty("הגדרות"[::-1])
     FONT_TXT = StringProperty("גודל גופן:"[::-1])
-    FONT_TXT = StringProperty("עוצמת מוזיקה:"[::-1])
+    VOLUME_TXT = StringProperty("עוצמת מוזיקה:"[::-1])
     BACK_TXT = StringProperty("חזור"[::-1])
 
     def __init__(self, name):

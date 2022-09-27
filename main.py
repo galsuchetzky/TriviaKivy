@@ -11,6 +11,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.text import LabelBase
 from kivy.properties import StringProperty
+from kivy.core.window import Window
 
 
 from screens import *
@@ -32,11 +33,36 @@ class TriviaApp(App):
         for screen in screens:
             manager.add_widget(screen)
 
+
+        Window.bind(on_keyboard=self.android_back_button)
+
         return manager
+
+    def android_back_button(self, window, key, *args):
+        """
+        When the back button in android is pressed, respond with the appropriate action.
+        :param window:
+        :param key: The pressed key.
+        :param args:
+        :return:
+        """
+
+        # Checks if the pressed key is the back button (esc on pc)
+        if key == 27:
+            if manager.current == 'game_mode_selection':
+                manager.current = 'main'
+            if manager.current == 'score':
+                manager.current = 'main'
+            if manager.current == 'settings':
+                manager.current = 'main'
+
+        return True
 
     def btn_pressed(self):
         click_sound.volume = MASTER_VOLUME
         click_sound.play()
+
+
 
 
 
@@ -58,7 +84,8 @@ if __name__ == '__main__':
                LoadingWindow(name="load_screen")]
 
     # Register our font.
-    LabelBase.register(name="Arial", fn_regular="arial.ttf")
+    LabelBase.register(name="Arial", fn_regular="fonts/arial.ttf")
+    LabelBase.register(name="Linux-Biolinum", fn_regular="fonts/Linux-Biolinum.ttf")
 
 
 

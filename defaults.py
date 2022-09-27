@@ -2,7 +2,7 @@ from kivy.core.audio import SoundLoader
 
 # Constants
 DEFAULT_FONT_SIZE = 25
-DEFALUT_FONT_NAME = 'Arial'
+DEFALUT_FONT_NAME = "Linux-Biolinum"
 MASTER_VOLUME = 0.5
 
 # Sounds
