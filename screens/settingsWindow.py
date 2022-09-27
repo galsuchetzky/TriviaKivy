@@ -21,6 +21,7 @@ class SettingsWindow(Screen):
     def __init__(self, name):
         super().__init__()
         self.name = name
+        self.ids.font_size_slider.value = defaults.DEFAULT_FONT_SIZE
         self.ids.volume_slider.value = defaults.MASTER_VOLUME
 
     # def update_font_size(self, n):
