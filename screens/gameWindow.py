@@ -7,9 +7,9 @@ kivy.require('2.1.0')
 
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import Screen
-from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
 
+from defaults import *
 
 class GameWindow(Screen):
     TIME_TXT = StringProperty("זמן"[::-1])
@@ -31,8 +31,7 @@ class GameWindow(Screen):
         self.mode = 0
         self.max_mistakes = None
         self.current_mistakes = 0
-        self.right_answer_sound = SoundLoader.load('sounds/Right_Answer.wav')
-        self.wrong_answer_sound = SoundLoader.load('sounds/Wrong_Answer.wav')
+
 
     def init_game_properties(self):
         """
@@ -72,7 +71,7 @@ class GameWindow(Screen):
         """
 
         # Stop menu music
-        self.manager.get_screen('main').menu_music.stop()
+        menu_music.stop()
 
         # Initialize the game properties to be ready for starting.
         self.init_game_properties()
@@ -129,14 +128,14 @@ class GameWindow(Screen):
             self.ids['ans' + str(selected_ans)].background_normal = ''
             self.ids['ans' + str(selected_ans)].background_color = 0, 1, 0, 1
             self.correct_answers += 1
-            self.right_answer_sound.play()
+            right_answer_sound.play()
 
         # Handle incorrect answer.
         else:
             self.ids['ans' + str(selected_ans)].background_normal = ''
             self.ids['ans' + str(selected_ans)].background_color = 1, 0, 0, 1
             self.current_mistakes += 1
-            self.wrong_answer_sound.play()
+            wrong_answer_sound.play()
 
         # Update the score counter.
         self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)

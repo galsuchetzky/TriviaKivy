@@ -11,7 +11,6 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.text import LabelBase
 from kivy.properties import StringProperty
-from kivy.core.audio import SoundLoader
 
 
 from screens import *
@@ -24,7 +23,6 @@ class TriviaApp(App):
     """
     default_font_size = StringProperty(str(DEFAULT_FONT_SIZE) + "sp")
     default_font_name = DEFALUT_FONT_NAME
-    click_sound = SoundLoader.load('sounds/Click_Audio.wav')
 
     def build(self):
         """
@@ -37,7 +35,8 @@ class TriviaApp(App):
         return manager
 
     def btn_pressed(self):
-        self.click_sound.play()
+        click_sound.volume = MASTER_VOLUME
+        click_sound.play()
 
 
 

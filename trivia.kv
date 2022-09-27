@@ -1,3 +1,4 @@
+#: set default_font_size app.default_font_size
 
 <Widget>
     font_name: app.default_font_name
@@ -224,7 +225,7 @@
 <SettingsWindow> :
     GridLayout:
         cols: 1
-        rows: 5
+        rows: 7
 
         canvas.before:
             Rectangle:
@@ -240,23 +241,41 @@
             text: ""
 
         GridLayout:
-            cols: 3
+            cols: 2
             rows: 1
 
-            Button:
-                text: "-"
-                valign: 'middle'
-                padding_x: 20
-                on_release: root.update_font_size(-2)
+            Slider:
+                min: 10
+                max: 40
+                value: default_font_size
+                on_value: root.set_font_size(self.value)
 
             Label:
+                text_size: self.width, None
+                max_lines: 1
+                padding_x: 20
+
                 text: root.FONT_TXT
 
-            Button:
-                text: "+"
-                valign: 'middle'
+        GridLayout:
+            cols: 2
+            rows: 1
+
+            Slider:
+                id: volume_slider
+                min: 0
+                max: 1
+                on_value: root.set_master_volume(self.value)
+
+            Label:
+                text_size: self.width, None
+                max_lines: 1
                 padding_x: 20
-                on_release: root.update_font_size(2)
+
+                text: root.FONT_TXT
+
+        Label:
+            text: ""
 
         Button:
             text: root.BACK_TXT
