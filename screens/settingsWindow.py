@@ -24,15 +24,6 @@ class SettingsWindow(Screen):
         self.ids.font_size_slider.value = defaults.DEFAULT_FONT_SIZE
         self.ids.volume_slider.value = defaults.MASTER_VOLUME
 
-    # def update_font_size(self, n):
-    #     """
-    #     Changes the font size.
-    #     :param n: By how much to change.
-    #     """
-    #     new_size = int(App.get_running_app().default_font_size[:-2]) + n
-    #     defaults.DEFAULT_FONT_SIZE = new_size
-    #     App.get_running_app().default_font_size = str(new_size) + 'sp'
-
     def set_font_size(self, n):
         """
         Sets the font size.
@@ -53,5 +44,3 @@ class SettingsWindow(Screen):
 
     def pass_screen_main(self):
         self.manager.current = 'main'
-
-
