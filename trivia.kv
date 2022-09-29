@@ -102,23 +102,35 @@
         GridLayout:
             cols: 2
             rows: 2
+            height: root.ids.score.texture_size[1] * 2
+            size_hint_y: None
 
             Label:
                 text: root.SCORE_TXT
+                height: self.texture_size[1]
+                size_hint_y: None
 
             Label:
                 text: root.TIME_TXT
+                height: self.texture_size[1]
+                size_hint_y: None
 
             Label:
                 id: score
                 text: root.SCORE_VALUE_TXT
+                height: self.texture_size[1]
+                size_hint_y: None
 
             Label:
                 id: timer
                 text: root.TIME_VALUE_TXT
+                height: self.texture_size[1]
+                size_hint_y: None
 
         ScrollView:
             do_scroll_x: False
+            height: root.ids.score.texture_size[1] * 8
+            size_hint_y: None
 
             Label:
                 text: "QUESTION"
