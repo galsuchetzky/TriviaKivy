@@ -1,5 +1,6 @@
 import kivy
 import random
+import time
 
 from timer import Timer
 
@@ -11,11 +12,12 @@ from kivy.clock import Clock
 
 from defaults import *
 
+
 class GameWindow(Screen):
     TIME_TXT = StringProperty("זמן"[::-1])
-    SUCCESS_TXT = StringProperty("הצלחה"[::-1])
+    SCORE_TXT = StringProperty("ניקוד"[::-1])
     TIME_VALUE_TXT = StringProperty("00:00")
-    SUCCESS_VALUE_TXT = StringProperty("")
+    SCORE_VALUE_TXT = StringProperty("")
 
     def __init__(self, name):
         super().__init__()
@@ -31,7 +33,9 @@ class GameWindow(Screen):
         self.mode = 0
         self.max_mistakes = None
         self.current_mistakes = 0
-
+        self.current_streak = 0
+        self.question_time = 0
+        self.score = 0
 
     def init_game_properties(self):
         """
@@ -41,8 +45,11 @@ class GameWindow(Screen):
         self.num_questions = len(self.questions)
         self.correct_answers = 0
         self.current_mistakes = 0
-        self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
+        self.ids.score.text = "0"
         self.max_mistakes = None
+        self.current_streak = 0
+        self.question_time = 0
+        self.score = 0
 
     def init_game_by_mode(self):
         """
@@ -91,12 +98,12 @@ class GameWindow(Screen):
         random.shuffle(self.questions)
         self.set_question()
 
-        def on_leave(self, *args):
-            """
-            Runs when we leave the screen.
-            """
-            # Stop the game music
-            game_music.stop()
+    def on_leave(self, *args):
+        """
+        Runs when we leave the screen.
+        """
+        # Stop the game music
+        game_music.stop()
 
     def set_question(self, *args):
         """
@@ -124,6 +131,9 @@ class GameWindow(Screen):
 
         self.clicked = False
 
+        # Take time
+        self.question_time = time.time()
+
     def select_answer(self, selected_ans):
         """
         Runs when an answer is selected.
@@ -136,20 +146,36 @@ class GameWindow(Screen):
 
         # Handle correct answer.
         if selected_ans == self.current_question.correct_answer:
+            right_answer_sound.play()
             self.ids['ans' + str(selected_ans)].background_normal = ''
             self.ids['ans' + str(selected_ans)].background_color = 0, 1, 0, 1
+
             self.correct_answers += 1
-            right_answer_sound.play()
+            self.current_streak += 1
+
+            # Calculate score
+            t = time.time() - self.question_time
+            if t < 8:
+                self.score += 10 + self.current_streak * 6
+            elif 8 <= t < 16:
+                self.score += 8 + self.current_streak * 6
+            elif 6 <= t < 32:
+                self.score += 6 + self.current_streak * 6
+            else:
+                self.score += 5 + self.current_streak * 6
+
+            self.question_time = 0
 
         # Handle incorrect answer.
         else:
             self.ids['ans' + str(selected_ans)].background_normal = ''
             self.ids['ans' + str(selected_ans)].background_color = 1, 0, 0, 1
             self.current_mistakes += 1
+            self.current_streak = 0
             wrong_answer_sound.play()
 
-        # Update the score counter.
-        self.ids.score.text = str(self.correct_answers) + '/' + str(self.num_questions)
+        # Update the score.
+        self.ids.score.text = str(self.score)
 
         # Continue to the next question after one second.
         Clock.schedule_once(self.set_question, 1)
