@@ -70,8 +70,12 @@ class GameWindow(Screen):
         Runs before the screen is loaded.
         """
 
-        # Stop menu music
+        # Stop the menu music
         menu_music.stop()
+
+        # Start the game music
+        if game_music.status != 'play':
+            game_music.play()
 
         # Initialize the game properties to be ready for starting.
         self.init_game_properties()
@@ -86,6 +90,13 @@ class GameWindow(Screen):
         # Shuffle the questions and set the first question.
         random.shuffle(self.questions)
         self.set_question()
+
+        def on_leave(self, *args):
+            """
+            Runs when we leave the screen.
+            """
+            # Stop the game music
+            game_music.stop()
 
     def set_question(self, *args):
         """

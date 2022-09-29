@@ -13,4 +13,7 @@ wrong_answer_sound = SoundLoader.load('sounds/Wrong_Answer.wav')
 menu_music = SoundLoader.load('sounds/Menu_Audio.wav')
 menu_music.loop = True
 
-sounds = [click_sound, right_answer_sound, wrong_answer_sound, menu_music]
+game_music = SoundLoader.load('sounds/Game_Audio.wav')
+game_music.loop = True
+
+sounds = [click_sound, right_answer_sound, wrong_answer_sound, menu_music, game_music]
