@@ -194,6 +194,7 @@ class GameWindow(Screen):
         """
         Changes to the score screen.
         """
-        self.manager.get_screen('game_score').final_score = str(self.correct_answers) + '/' + str(self.num_questions)
+        self.manager.get_screen('game_score').final_score = str(self.score)
+        self.manager.get_screen('game_score').final_success = str(self.correct_answers) + '/' + str(self.num_questions)
         self.manager.current = 'game_score'
         self.timer.stop()

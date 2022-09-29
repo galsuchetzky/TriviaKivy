@@ -180,7 +180,7 @@
 <GameScoreWindow>:
     GridLayout:
         cols: 1
-        rows: 4
+        rows: 3
 
         canvas.before:
             Rectangle:
@@ -191,12 +191,23 @@
         Label:
             text: ""
 
-        Label:
-            text: root.FINAL_SCORE_TXT
+        GridLayout:
+            cols: 2
+            rows: 2
 
-        Label:
-            id: score
-            text: ""
+            Label:
+                id: success
+                text: ""
+
+            Label:
+                text: root.FINAL_SUCCESS_TXT
+
+            Label:
+                id: score
+                text: ""
+
+            Label:
+                text: root.FINAL_SCORE_TXT
 
         Label:
             text: ""
