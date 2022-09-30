@@ -256,42 +256,19 @@
 
         Label:
             id: score_title
-            text: "Score"
+            text: root.TITLE_TXT
             height: self.texture_size[1] * 2
             size_hint_y: None
 
-        GridLayout:
-            id: g1
-            cols: 3
-            rows: 1
-            size_hint_y: None
-
-            Label:
-                text: "Score"
-                height: self.texture_size[1]
-                size_hint_y: None
-
-            Label:
-                text: "Date"
-                height: self.texture_size[1]
-                size_hint_y: None
-
-            Label:
-                text: "ID"
-                height: self.texture_size[1]
-                size_hint_y: None
-
         ScrollView:
-            id: table_scrollview
+            id: master_scroll_view
             size_hint_y: None
             do_scroll_x: False
 
             GridLayout:
+                id: master_grid
                 size_hint_y: None
-                id: table_grid
-                cols: 3
-
-
+                cols: 1
 
 
 <SettingsWindow> :

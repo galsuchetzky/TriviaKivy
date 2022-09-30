@@ -1,5 +1,7 @@
 import kivy
 
+import defaults
+
 kivy.require('2.1.0')
 
 from kivy.properties import StringProperty
@@ -22,5 +24,5 @@ class GameModeSelectionWindow(Screen):
         self.manager.current = 'main'
 
     def start_game(self, mode):
-        self.manager.get_screen('game').mode = mode
+        self.manager.get_screen('game').mode = defaults.GameModes(mode)
         self.manager.current = 'load_screen'

@@ -1,4 +1,5 @@
 from kivy.core.audio import SoundLoader
+from enum import Enum
 
 # Constants
 DEFAULT_FONT_SIZE = 25
@@ -17,3 +18,20 @@ game_music = SoundLoader.load('sounds/Game_Audio.wav')
 game_music.loop = True
 
 sounds = [click_sound, right_answer_sound, wrong_answer_sound, menu_music, game_music]
+
+# Game Modes
+class GameModes(Enum):
+    PRACTICE = 0
+    ERRORS3 = 1
+    ERRORS1 = 2
+    TIME = 3
+
+    @staticmethod
+    def get_name(n):
+        names = {
+            0: 'אימון'[::-1],
+            1: 'טעות אחת'[::-1],
+            2: '3 טעויות'[::-1],
+            3: 'זמן'[::-1]
+        }
+        return names[n]

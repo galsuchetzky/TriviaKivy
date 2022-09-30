@@ -14,6 +14,8 @@ from defaults import *
 
 from datetime import date
 
+from pathlib import Path
+
 def is_hebrew(s):
     """
     Checks if a string is a hebrew word.
@@ -102,18 +104,32 @@ def fix_string(s):
 
 
 # Todo later keep player entered name and create in backend a unique player id.
-def save_score(score):
-    with open('scores.json', 'w+') as f:
-        scores = json.load(f)
+def save_score(score, game_mode):
+    scores = get_scores()
 
     id = len(scores)
     new_score = {
         "id": id,
+        "game_mode": game_mode.value,
         "score": score,
         "date": date.today().strftime("%d/%m/%Y")
     }
 
     scores[id] = new_score
 
-    with open('scores.json', 'w+') as f:
+    with open('scores.json', 'w') as f:
         json.dump(scores, f)
+
+def get_scores():
+    scores_file = Path('scores.json')
+    if not scores_file.is_file():
+        with open('scores.json', 'w+') as f:
+            f.write('{}')
+
+    with open('scores.json', 'r') as f:
+        try:
+            scores = json.load(f)
+        except:
+            scores = {}
+
+    return scores

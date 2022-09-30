@@ -2,6 +2,8 @@ import kivy
 import random
 import time
 
+import defaults
+import utils
 from timer import Timer
 
 kivy.require('2.1.0')
@@ -55,18 +57,18 @@ class GameWindow(Screen):
         """
         Initialize the game attributes according to the selected mode.
         """
-        if self.mode == 0:
+        if self.mode == defaults.GameModes.PRACTICE:
             self.timer = Timer(self.ids.timer)
 
-        elif self.mode == 1:
+        elif self.mode == defaults.GameModes.ERRORS3:
             self.timer = Timer(self.ids.timer)
             self.max_mistakes = 3
 
-        elif self.mode == 2:
+        elif self.mode == defaults.GameModes.ERRORS1:
             self.timer = Timer(self.ids.timer)
             self.max_mistakes = 1
 
-        elif self.mode == 3:
+        elif self.mode == defaults.GameModes.TIME:
             self.timer = Timer(self.ids.timer,
                                countdown=True,
                                countdown_start_time=180,
@@ -195,6 +197,7 @@ class GameWindow(Screen):
         Changes to the score screen.
         """
         self.manager.get_screen('game_score').final_score = str(self.score)
+        utils.save_score(self.score, self.mode)
         self.manager.get_screen('game_score').final_success = str(self.correct_answers) + '/' + str(self.num_questions)
         self.manager.current = 'game_score'
         self.timer.stop()

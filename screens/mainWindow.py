@@ -4,7 +4,6 @@ kivy.require('2.1.0')
 
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import Screen
-from kivy.core.audio import SoundLoader
 
 from defaults import *
 
