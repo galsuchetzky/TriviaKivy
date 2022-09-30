@@ -11,7 +11,7 @@
 <MainWindow>:
     GridLayout:
         cols: 1
-        rows: 6
+        rows: 5
 
         canvas.before:
             Rectangle:
@@ -41,10 +41,6 @@
             on_release:
                 root.pass_screen('settings')
 
-        Button:
-            text: root.EXIT_TXT
-            on_release:
-                root.quit()
 
 <GameModeSelectionWindow>:
     GridLayout:
@@ -247,7 +243,8 @@
 <ScoreWindow>:
     GridLayout:
         cols: 1
-        rows: 7
+        rows: 3
+
 
         canvas.before:
             Rectangle:
@@ -256,8 +253,46 @@
                 source: 'Background_texture.png'
 
 
+
         Label:
+            id: score_title
             text: "Score"
+            height: self.texture_size[1] * 2
+            size_hint_y: None
+
+        GridLayout:
+            id: g1
+            cols: 3
+            rows: 1
+            size_hint_y: None
+
+            Label:
+                text: "Score"
+                height: self.texture_size[1]
+                size_hint_y: None
+
+            Label:
+                text: "Date"
+                height: self.texture_size[1]
+                size_hint_y: None
+
+            Label:
+                text: "ID"
+                height: self.texture_size[1]
+                size_hint_y: None
+
+        ScrollView:
+            id: table_scrollview
+            size_hint_y: None
+            do_scroll_x: False
+
+            GridLayout:
+                size_hint_y: None
+                id: table_grid
+                cols: 3
+
+
+
 
 <SettingsWindow> :
     GridLayout:

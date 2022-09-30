@@ -4,6 +4,7 @@ Utilities file.
 
 import kivy
 import string
+import json
 
 kivy.require('2.1.0')
 
@@ -11,6 +12,7 @@ from kivy.core.text import Label
 from kivy.core.window import Window
 from defaults import *
 
+from datetime import date
 
 def is_hebrew(s):
     """
@@ -97,3 +99,21 @@ def fix_string(s):
         final.append(' '.join(tmp[::-1]))
 
     return '\n'.join(final)
+
+
+# Todo later keep player entered name and create in backend a unique player id.
+def save_score(score):
+    with open('scores.json', 'w+') as f:
+        scores = json.load(f)
+
+    id = len(scores)
+    new_score = {
+        "id": id,
+        "score": score,
+        "date": date.today().strftime("%d/%m/%Y")
+    }
+
+    scores[id] = new_score
+
+    with open('scores.json', 'w+') as f:
+        json.dump(scores, f)
