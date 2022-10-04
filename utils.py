@@ -6,6 +6,7 @@ import kivy
 import string
 import json
 import certifi
+import urllib
 
 kivy.require('2.1.0')
 
@@ -144,6 +145,16 @@ def get_questions_from_server(question_file_name, callback):
     # Note that we use certifi things and verify otherwise it will not work on phone.
     # We use start as callback to start the game when the questions file is returned.
     url = f'http://10.0.0.7:5000/questions/{question_file_name}'
-    # url = 'http://127.0.0.1:5000/questions/Biology%20test.json'
-    # req = UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=lambda *args: print(123123123))
     UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=callback)
+
+def post_score(name, score, mode):
+    params = urllib.parse.urlencode({'name': name,
+                               'score': score,
+                               'mode': mode.value})
+
+    headers = {'Content-type': 'application/x-www-form-urlencoded',
+               'Accept': 'text/plain'}
+
+    url = 'http://10.0.0.7:5000/postscore'
+
+    req = UrlRequest(url, req_body=params, req_headers=headers, ca_file=certifi.where(), verify=True)

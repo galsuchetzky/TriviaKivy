@@ -79,10 +79,6 @@
             on_release:
                 root.start_game(3)
 
-        Button:
-            text: root.BACK_TXT
-            on_release:
-                root.pass_screen_main()
 
 <GameWindow>:
     GridLayout:
@@ -321,14 +317,6 @@
                 min: 0
                 max: 1
                 on_value: root.set_master_volume(self.value)
-
-        Label:
-            text: ""
-
-        Button:
-            text: root.BACK_TXT
-            on_release:
-                root.pass_screen_main()
 
         Label:
             text: ""

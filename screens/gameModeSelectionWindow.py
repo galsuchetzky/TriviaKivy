@@ -14,7 +14,6 @@ class GameModeSelectionWindow(Screen):
     EASY_TXT = StringProperty("3 פסילות"[::-1])
     MEDIUM_TXT = StringProperty("פסילה אחת"[::-1])
     TIME_MODE_TXT = StringProperty("על זמן"[::-1])
-    BACK_TXT = StringProperty("חזור"[::-1])
 
     def __init__(self, name):
         super().__init__()
