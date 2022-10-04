@@ -3,3 +3,4 @@ venv/
 .buildozer
 .idea
 *__pycache__/
+scores.json
