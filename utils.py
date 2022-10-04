@@ -5,16 +5,18 @@ Utilities file.
 import kivy
 import string
 import json
+import certifi
 
 kivy.require('2.1.0')
 
 from kivy.core.text import Label
 from kivy.core.window import Window
+from kivy.network.urlrequest import UrlRequest
+
 from defaults import *
-
 from datetime import date
-
 from pathlib import Path
+
 
 def is_hebrew(s):
     """
@@ -74,7 +76,7 @@ def fix_string(s):
             # Flip all braces.
             for j, c in enumerate(w):
                 if c in fliped_braces:
-                    w = w[:j] + fliped_braces[c] + w[j+1:]
+                    w = w[:j] + fliped_braces[c] + w[j + 1:]
 
             # Handle Hebrew
             if is_hebrew(w):
@@ -120,6 +122,7 @@ def save_score(score, game_mode):
     with open('scores.json', 'w') as f:
         json.dump(scores, f)
 
+
 def get_scores():
     scores_file = Path('scores.json')
     if not scores_file.is_file():
@@ -133,3 +136,14 @@ def get_scores():
             scores = {}
 
     return scores
+
+
+def get_questions_from_server(question_file_name, callback):
+    # TODO add timeout for waiting in case of no connection to server.
+    # Request the questions file from the server.
+    # Note that we use certifi things and verify otherwise it will not work on phone.
+    # We use start as callback to start the game when the questions file is returned.
+    url = f'http://10.0.0.7:5000/questions/{question_file_name}'
+    # url = 'http://127.0.0.1:5000/questions/Biology%20test.json'
+    # req = UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=lambda *args: print(123123123))
+    UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=callback)
