@@ -29,15 +29,13 @@
         TextInput:
             id: name_txt_input
             multiline: False
-            on_double_tap: None
-            on_quad_touch: None
+            use_bubble: False
             on_focus:
                 root.redirect_focus()
 
         TextInput:
             id: name_input_hidden
-            on_double_tap: None
-            on_quad_touch: None
+            use_bubble: False
             on_text:
                 root.fix_string(self.text)
             multiline: False
