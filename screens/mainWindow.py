@@ -4,9 +4,10 @@ kivy.require('2.1.0')
 
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import Screen
+from kivy.app import App
 
 from defaults import *
-
+import utils
 
 class MainWindow(Screen):
     """
@@ -31,6 +32,10 @@ class MainWindow(Screen):
         # Play the menu music if it is not playing already.
         if menu_music.status != 'play':
             menu_music.play()
+
+        # Congrat player
+        welcome_text = "שלום " + App.get_running_app().player_name + '!'
+        self.ids.welcome_label.text = utils.fix_string(welcome_text)
 
     def quit(self):
         """

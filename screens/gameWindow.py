@@ -198,8 +198,7 @@ class GameWindow(Screen):
         """
         self.manager.get_screen('game_score').final_score = str(self.score)
         utils.save_score(self.score, self.mode)
-        # TODO get real name from user!
-        utils.post_score("Cyber", self.score, self.mode)
+        utils.post_score(self.score, self.mode)
         self.manager.get_screen('game_score').final_success = str(self.correct_answers) + '/' + str(self.num_questions)
         self.manager.current = 'game_score'
         self.timer.stop()

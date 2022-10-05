@@ -8,6 +8,42 @@
 <Button>
     on_press: app.btn_pressed()
 
+<WelcomeWindow>
+    GridLayout:
+        cols: 1
+        rows: 6
+
+        Label:
+            text: ""
+
+        Label:
+            text: root.WELCOME_NEW_PLAYER_TXT
+
+
+        TextInput:
+            id: name_txt_input
+            multiline: False
+            on_focus:
+                root.redirect_focus()
+
+        TextInput:
+            id: name_input_hidden
+            on_text:
+                root.fix_string(self.text)
+            multiline: False
+
+        Button:
+            text: root.CONTINUE_TXT
+            on_release:
+                root.continue_to_game()
+
+        Label:
+            text: ""
+
+
+
+
+
 <MainWindow>:
     GridLayout:
         cols: 1
@@ -24,7 +60,6 @@
 
         Label:
             id: welcome_label
-            text: root.WELCOME_TXT
 
         Button:
             text: root.PLAY_TXT

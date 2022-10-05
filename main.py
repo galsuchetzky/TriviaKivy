@@ -13,7 +13,6 @@ from kivy.core.text import LabelBase
 from kivy.properties import StringProperty
 from kivy.core.window import Window
 
-
 from screens import *
 from defaults import *
 
@@ -24,6 +23,7 @@ class TriviaApp(App):
     """
     default_font_size = StringProperty(str(DEFAULT_FONT_SIZE) + "sp")
     default_font_name = DEFALUT_FONT_NAME
+    player_name = 'no_name'
 
     def build(self):
         """
@@ -32,7 +32,6 @@ class TriviaApp(App):
         """
         for screen in screens:
             manager.add_widget(screen)
-
 
         Window.bind(on_keyboard=self.android_back_button)
 
@@ -63,9 +62,6 @@ class TriviaApp(App):
         click_sound.play()
 
 
-
-
-
 if __name__ == '__main__':
     # Instantiate the application.
     app = TriviaApp()
@@ -75,7 +71,8 @@ if __name__ == '__main__':
 
     # Instantiate the screen manager and the screens with their names.
     manager = ScreenManager()
-    screens = [MainWindow(name="main"),
+    screens = [WelcomeWindow(name="welcome"),
+               MainWindow(name="main"),
                GameModeSelectionWindow(name="game_mode_selection"),
                ScoreWindow(name="score"),
                SettingsWindow(name="settings"),
@@ -87,8 +84,5 @@ if __name__ == '__main__':
     LabelBase.register(name="Arial", fn_regular="fonts/arial.ttf")
     LabelBase.register(name="Linux-Biolinum", fn_regular="fonts/Linux-Biolinum.ttf")
 
-
-
     # Run the application.
     app.run()
-

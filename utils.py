@@ -13,6 +13,7 @@ kivy.require('2.1.0')
 from kivy.core.text import Label
 from kivy.core.window import Window
 from kivy.network.urlrequest import UrlRequest
+from kivy.app import App
 
 from defaults import *
 from datetime import date
@@ -41,6 +42,14 @@ def get_str_pixel_width(s, **kwargs):
     :param s: The string to calculate the length of.
     """
     return Label(**kwargs).get_extents(s)[0]
+
+
+def get_str_pixel_height():
+    """
+    Calculates the pixel height of the strings.
+    """
+    return Label(font_name=DEFALUT_FONT_NAME,
+                 font_size=kivy.metrics.sp(DEFAULT_FONT_SIZE)).get_extents('test')[1]
 
 
 def fix_string(s):
@@ -120,17 +129,17 @@ def save_score(score, game_mode):
 
     scores[id] = new_score
 
-    with open('scores.json', 'w') as f:
+    with open('scores.json', 'w', encoding="utf-8") as f:
         json.dump(scores, f)
 
 
 def get_scores():
     scores_file = Path('scores.json')
     if not scores_file.is_file():
-        with open('scores.json', 'w+') as f:
+        with open('scores.json', 'w+', encoding="utf-8") as f:
             f.write('{}')
 
-    with open('scores.json', 'r') as f:
+    with open('scores.json', 'r', encoding="utf-8") as f:
         try:
             scores = json.load(f)
         except:
@@ -147,10 +156,11 @@ def get_questions_from_server(question_file_name, callback):
     url = f'http://10.0.0.7:5000/questions/{question_file_name}'
     UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=callback)
 
-def post_score(name, score, mode):
-    params = urllib.parse.urlencode({'name': name,
-                               'score': score,
-                               'mode': mode.value})
+
+def post_score(score, mode):
+    params = urllib.parse.urlencode({'name': App.get_running_app().player_name,
+                                     'score': score,
+                                     'mode': mode.value})
 
     headers = {'Content-type': 'application/x-www-form-urlencoded',
                'Accept': 'text/plain'}
@@ -158,3 +168,27 @@ def post_score(name, score, mode):
     url = 'http://10.0.0.7:5000/postscore'
 
     req = UrlRequest(url, req_body=params, req_headers=headers, ca_file=certifi.where(), verify=True)
+
+
+def get_prefrences():
+    prefrences_file = Path('prefrences.json')
+    if not prefrences_file.is_file():
+        with open('prefrences.json', 'w+', encoding="utf-8") as f:
+            f.write('{}')
+
+    with open('prefrences.json', 'r', encoding="utf-8") as f:
+        try:
+            prefrences = json.load(f)
+        except:
+            prefrences = {}
+
+    return prefrences
+
+
+def save_prefrences(**kwargs):
+    prefs = {
+        "player_name": kwargs['player_name'],
+    }
+
+    with open('prefrences.json', 'w', encoding="utf-8") as f:
+        json.dump(prefs, f)
