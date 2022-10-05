@@ -13,6 +13,12 @@
         cols: 1
         rows: 6
 
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: [max(self.size[0],self.size[1]), max(self.size[0],self.size[1])]
+                source: 'Background_texture.png'
+
         Label:
             text: ""
 
