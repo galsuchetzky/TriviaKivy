@@ -18,7 +18,7 @@ from kivy.app import App
 from defaults import *
 from datetime import date
 from pathlib import Path
-
+from collections import defaultdict
 
 def is_hebrew(s):
     """
@@ -116,7 +116,7 @@ def fix_string(s):
 
 
 # Todo later keep player entered name and create in backend a unique player id.
-def save_score(score, game_mode):
+def save_score1(score, game_mode):
     scores = get_scores()
 
     id = len(scores)
@@ -128,6 +128,21 @@ def save_score(score, game_mode):
     }
 
     scores[id] = new_score
+
+    with open('scores.json', 'w', encoding="utf-8") as f:
+        json.dump(scores, f)
+
+
+def save_score(score, game_mode):
+    scores = get_scores()
+
+    new_score = {
+        "score": score,
+        "name": App.get_running_app().player_name,
+        "date": date.today().strftime("%d/%m/%Y")
+    }
+
+    scores[str(game_mode.value)].append(new_score)
 
     with open('scores.json', 'w', encoding="utf-8") as f:
         json.dump(scores, f)
@@ -145,7 +160,7 @@ def get_scores():
         except:
             scores = {}
 
-    return scores
+    return defaultdict(list, scores)
 
 
 def get_questions_from_server(question_file_name, callback):
@@ -154,6 +169,13 @@ def get_questions_from_server(question_file_name, callback):
     # Note that we use certifi things and verify otherwise it will not work on phone.
     # We use start as callback to start the game when the questions file is returned.
     url = f'http://10.0.0.7:5000/questions/{question_file_name}'
+    UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=callback)
+
+def get_scores_from_server(callback):
+    """
+    Gets the scores from the server and calls the callback upon receive.
+    """
+    url = f'http://10.0.0.7:5000/getscores'
     UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=callback)
 
 
