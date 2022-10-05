@@ -9,7 +9,6 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.properties import StringProperty
-from kivy.uix.scrollview import ScrollView
 from kivy.uix.gridlayout import GridLayout
 
 from collections import defaultdict
@@ -50,18 +49,19 @@ class ScoreWindow(Screen):
         scores = utils.get_scores()
         for game_mode in range(len(defaults.GameModes)):
             table_name = utils.fix_string(defaults.GameModes.get_name(game_mode))
-            self.build_table(table_name, game_mode, scores[str(game_mode)])
+            self.build_table(table_name, scores[str(game_mode)])
 
     def build_global_score_tables(self, req, *args):
         """
         Building the score tables for the global scores.
         """
-        scores = defaultdict(list,req.result)
+        scores = defaultdict(list, req.result)
         for game_mode in range(len(defaults.GameModes)):
             table_name = utils.fix_string(defaults.GameModes.get_name(game_mode) + ' שיתופי')
-            self.build_table(table_name, game_mode, scores[str(game_mode)])
+            self.build_table(table_name, scores[str(game_mode)])
 
-    def build_table(self, table_name, game_mode, scores):
+    def build_table(self, table_name, scores):
+        # Builds a table with the given names and scores and adds it to the window.
         row_height = self.ids.score_title.texture_size[1]
         tables_grid = self.ids.master_grid
         tables_grid.rows += 1

@@ -115,24 +115,6 @@ def fix_string(s):
     return '\n'.join(final)
 
 
-# Todo later keep player entered name and create in backend a unique player id.
-def save_score1(score, game_mode):
-    scores = get_scores()
-
-    id = len(scores)
-    new_score = {
-        "id": id,
-        "game_mode": game_mode.value,
-        "score": score,
-        "date": date.today().strftime("%d/%m/%Y")
-    }
-
-    scores[id] = new_score
-
-    with open('scores.json', 'w', encoding="utf-8") as f:
-        json.dump(scores, f)
-
-
 def save_score(score, game_mode):
     scores = get_scores()
 
@@ -180,6 +162,9 @@ def get_scores_from_server(callback):
 
 
 def post_score(score, mode):
+    """
+    Post player score to server.
+    """
     params = urllib.parse.urlencode({'name': App.get_running_app().player_name,
                                      'score': score,
                                      'mode': mode.value})
