@@ -31,7 +31,8 @@ class LoadingWindow(Screen):
         # req = UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=self.start)
 
         # Get the questions file from the server.
-        get_questions_from_server('Biology%20test.json', self.start)
+        # get_questions_from_server('Biology%20test.json', self.start)
+        get_questions_from_server('questions.json', self.start)
 
     def start(self, req, *args):
         """

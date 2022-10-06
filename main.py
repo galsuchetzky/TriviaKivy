@@ -10,7 +10,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 from kivy.core.text import LabelBase
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ListProperty
 from kivy.core.window import Window
 
 from screens import *
@@ -24,6 +24,8 @@ class TriviaApp(App):
     default_font_size = StringProperty(str(DEFAULT_FONT_SIZE) + "sp")
     default_font_name = DEFALUT_FONT_NAME
     player_name = 'no_name'
+    background_src = StringProperty(BACKGROUND_LIGHT_SRC)
+    font_color = ListProperty(FONT_COLOR_LIGHT)
 
     def build(self):
         """

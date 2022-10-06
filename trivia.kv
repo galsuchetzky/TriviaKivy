@@ -1,8 +1,8 @@
-#: set default_font_size app.default_font_size
-
 <Widget>
     font_name: app.default_font_name
     font_size: app.default_font_size
+    color: app.font_color
+
     halign: 'right'
 
 <Button>
@@ -17,7 +17,7 @@
             Rectangle:
                 pos: self.pos
                 size: [max(self.size[0],self.size[1]), max(self.size[0],self.size[1])]
-                source: 'Background_texture.png'
+                source: app.background_src
 
         Label:
             text: ""
@@ -61,7 +61,7 @@
             Rectangle:
                 pos: self.pos
                 size: [max(self.size[0],self.size[1]), max(self.size[0],self.size[1])]
-                source: 'Background_texture.png'
+                source: app.background_src
 
         Label:
             text: ""
@@ -94,7 +94,7 @@
             Rectangle:
                 pos: self.pos
                 size: [max(self.size[0],self.size[1]), max(self.size[0],self.size[1])]
-                source: 'Background_texture.png'
+                source: app.background_src
 
         Label:
             text: ""
@@ -132,7 +132,7 @@
             Rectangle:
                 pos: self.pos
                 size: [max(self.size[0],self.size[1]), max(self.size[0],self.size[1])]
-                source: 'Background_texture.png'
+                source: app.background_src
 
         GridLayout:
             cols: 2
@@ -233,7 +233,7 @@
             Rectangle:
                 pos: self.pos
                 size: [max(self.size[0],self.size[1]), max(self.size[0],self.size[1])]
-                source: 'Background_texture.png'
+                source: app.background_src
 
         Label:
             text: ""
@@ -268,7 +268,7 @@
             Rectangle:
                 pos: self.pos
                 size: [max(self.size[0],self.size[1]), max(self.size[0],self.size[1])]
-                source: 'Background_texture.png'
+                source: app.background_src
 
         Label:
             text: ""
@@ -289,7 +289,7 @@
             Rectangle:
                 pos: self.pos
                 size: [max(self.size[0],self.size[1]), max(self.size[0],self.size[1])]
-                source: 'Background_texture.png'
+                source: app.background_src
 
 
 
@@ -312,54 +312,105 @@
 
 <SettingsWindow> :
     GridLayout:
+        id: grid
         cols: 1
         rows: 7
+        image: app.background_src
 
         canvas.before:
             Rectangle:
+                id: rect
                 pos: self.pos
                 size: [max(self.size[0],self.size[1]), max(self.size[0],self.size[1])]
-                source: 'Background_texture.png'
-
+                source: self.image
 
         Label:
+            id: settings_title
             text: root.SETTINGS_HEADER_TXT
+            height: self.texture_size[1] * 2
+            size_hint_y: None
 
-        Label:
-            text: ""
+        ScrollView:
+            id: master_scroll_view
+            size_hint_y: None
+            do_scroll_x: False
 
-        GridLayout:
-            cols: 1
-            rows: 2
+            GridLayout:
+                id: master_grid
+                size_hint_y: None
+                cols: 1
+                rows: 3
 
-            Label:
-                text_size: self.width, None
-                max_lines: 1
-                padding_x: 20
 
-                text: root.FONT_TXT
+                GridLayout:
+                    cols: 1
+                    rows: 3
+                    size_hint_y: None
 
-            Slider:
-                id: font_size_slider
-                min: 10
-                max: 30
-                on_value: root.set_font_size(self.value)
 
-        GridLayout:
-            cols: 1
-            rows: 2
+                    Label:
+                        text: root.FONT_TXT
+                        text_size: self.width, None
+                        height: self.texture_size[1] * 2
+                        size_hint_y: None
+                        max_lines: 1
+                        padding_x: 20
 
-            Label:
-                text_size: self.width, None
-                max_lines: 1
-                padding_x: 20
-                text: root.VOLUME_TXT
+                    Slider:
+                        id: font_size_slider
+                        min: 10
+                        max: 30
+                        on_value: root.set_font_size(self.value)
+                        height: '10sp'
+                        size_hint_y: None
 
-            Slider:
-                id: volume_slider
-                min: 0
-                max: 1
-                on_value: root.set_master_volume(self.value)
 
-        Label:
-            text: ""
+                    Label:
+                        text: ""
+
+                GridLayout:
+                    cols: 1
+                    rows: 3
+                    size_hint_y: None
+
+                    Label:
+                        text: root.VOLUME_TXT
+                        text_size: self.width, None
+                        height: self.texture_size[1] * 2
+                        size_hint_y: None
+                        padding_x: 20
+                        max_lines: 1
+
+                    Slider:
+                        id: volume_slider
+                        min: 0
+                        max: 1
+                        on_value: root.set_master_volume(self.value)
+                        height: '10sp'
+                        size_hint_y: None
+
+                    Label:
+                        text: ""
+
+                    Label:
+                        text: ""
+
+
+                GridLayout:
+                    cols: 2
+                    rows: 2
+                    size_hint_y: None
+
+                    Switch:
+                        active: False
+                        on_active: root.toggle_dark_mode(self.active)
+
+
+                    Label:
+                        text: root.DARK_MODE_TXT
+                        text_size: self.width, None
+                        max_lines: 1
+                        padding_x: 20
+                        valign: 'middle'
+                    Label:
+                        text: ""

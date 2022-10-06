@@ -20,6 +20,7 @@ from datetime import date
 from pathlib import Path
 from collections import defaultdict
 
+
 def is_hebrew(s):
     """
     Checks if a string is a hebrew word.
@@ -127,7 +128,7 @@ def save_score(score, game_mode):
     scores[str(game_mode.value)].append(new_score)
 
     with open('scores.json', 'w', encoding="utf-8") as f:
-        json.dump(scores, f)
+        json.dump(scores, f, ensure_ascii=False, indent=4)
 
 
 def get_scores():
@@ -150,14 +151,15 @@ def get_questions_from_server(question_file_name, callback):
     # Request the questions file from the server.
     # Note that we use certifi things and verify otherwise it will not work on phone.
     # We use start as callback to start the game when the questions file is returned.
-    url = f'http://10.0.0.7:5000/questions/{question_file_name}'
+    url = f'http://127.0.0.1:5000/questions/{question_file_name}'
     UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=callback)
+
 
 def get_scores_from_server(callback):
     """
     Gets the scores from the server and calls the callback upon receive.
     """
-    url = f'http://10.0.0.7:5000/getscores'
+    url = f'http://127.0.0.1:5000/getscores'
     UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=callback)
 
 
@@ -198,4 +200,4 @@ def save_prefrences(**kwargs):
     }
 
     with open('prefrences.json', 'w', encoding="utf-8") as f:
-        json.dump(prefs, f)
+        json.dump(prefs, f, ensure_ascii=False, indent=4)
