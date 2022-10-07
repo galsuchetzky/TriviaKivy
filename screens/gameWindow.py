@@ -59,6 +59,7 @@ class GameWindow(Screen):
         """
         if self.mode == defaults.GameModes.PRACTICE:
             self.timer = Timer(self.ids.timer)
+            self.max_mistakes = None
 
         elif self.mode == defaults.GameModes.ERRORS3:
             self.timer = Timer(self.ids.timer)
@@ -127,8 +128,7 @@ class GameWindow(Screen):
 
         # Set the answers to the buttons.
         for i in range(4):
-            self.ids['ans' + str(i)].background_normal = self.default_bg_normal
-            self.ids['ans' + str(i)].background_color = self.default_bg_color
+            self.ids['ans' + str(i)].background_normal = BUTTON_BACKGROUND_NORMAL
             self.ids['ans' + str(i)].text = self.current_question.answers[i]
 
         self.clicked = False
@@ -149,9 +149,7 @@ class GameWindow(Screen):
         # Handle correct answer.
         if selected_ans == self.current_question.correct_answer:
             right_answer_sound.play()
-            self.ids['ans' + str(selected_ans)].background_normal = ''
-            self.ids['ans' + str(selected_ans)].background_color = 0, 1, 0, 1
-
+            self.ids['ans' + str(selected_ans)].background_normal = defaults.CORRECT_ANSWER_BACKGROUND
             self.correct_answers += 1
             self.current_streak += 1
 
@@ -170,8 +168,7 @@ class GameWindow(Screen):
 
         # Handle incorrect answer.
         else:
-            self.ids['ans' + str(selected_ans)].background_normal = ''
-            self.ids['ans' + str(selected_ans)].background_color = 1, 0, 0, 1
+            self.ids['ans' + str(selected_ans)].background_normal = WRONG_ANSWER_BACKGROUND
             self.current_mistakes += 1
             self.current_streak = 0
             wrong_answer_sound.play()

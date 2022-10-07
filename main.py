@@ -26,6 +26,8 @@ class TriviaApp(App):
     player_name = 'no_name'
     background_src = StringProperty(BACKGROUND_LIGHT_SRC)
     font_color = ListProperty(FONT_COLOR_LIGHT)
+    button_background_normal = BUTTON_BACKGROUND_NORMAL
+    button_background_down = BUTTON_BACKGROUND_DOWN
 
     def build(self):
         """
@@ -85,6 +87,7 @@ if __name__ == '__main__':
     # Register our font.
     LabelBase.register(name="Arial", fn_regular="fonts/arial.ttf")
     LabelBase.register(name="Linux-Biolinum", fn_regular="fonts/Linux-Biolinum.ttf")
+    LabelBase.register(name="DavidLibre-Regular", fn_regular="fonts/DavidLibre-Regular.ttf")
 
     # Run the application.
     app.run()

@@ -7,6 +7,9 @@
 
 <Button>
     on_press: app.btn_pressed()
+    background_normal: app.button_background_normal
+    background_down: app.button_background_down
+    allow_stretch: False
 
 <WelcomeWindow>
     GridLayout:
@@ -42,6 +45,7 @@
 
         Button:
             text: root.CONTINUE_TXT
+
             on_release:
                 root.continue_to_game()
 

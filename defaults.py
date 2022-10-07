@@ -3,9 +3,13 @@ from enum import Enum
 
 # Constants
 DEFAULT_FONT_SIZE = 25
-DEFALUT_FONT_NAME = "Linux-Biolinum"
-BACKGROUND_LIGHT_SRC = 'Background_light_mode.png'
-BACKGROUND_DARK_SRC = 'Background_dark_mode.png'
+DEFALUT_FONT_NAME = "DavidLibre-Regular"
+BACKGROUND_LIGHT_SRC = 'images/background_light_mode.png'
+BACKGROUND_DARK_SRC = 'images/background_dark_mode.png'
+BUTTON_BACKGROUND_NORMAL = "images/button_background_normal.png"
+BUTTON_BACKGROUND_DOWN = "images/button_background_down.png"
+CORRECT_ANSWER_BACKGROUND = "images/correct_answer_background.png"
+WRONG_ANSWER_BACKGROUND = "images/wrong_answer_background.png"
 FONT_COLOR_DARK = (1, 1, 1, 1)  # White
 FONT_COLOR_LIGHT = (0, 0, 0, 1)  # Black
 MASTER_VOLUME = 0.5
