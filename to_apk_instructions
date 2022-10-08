@@ -1,3 +1,5 @@
+buildozer script at: /home/galsuchetzky/.local/bin/buildozer
+
 buildozed init # run this in the proejct folder and you get a buildozer.spec file, only change the requirements by need and title, package.name, package.domain
 
 buildozer -v android debug # build the application

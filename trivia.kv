@@ -1,6 +1,6 @@
 <Widget>
-    font_name: app.default_font_name
-    font_size: app.default_font_size
+    font_name: app.font_name
+    font_size: app.font_size
     color: app.font_color
 
     halign: 'right'
@@ -139,9 +139,9 @@
                 source: app.background_src
 
         GridLayout:
+            id: info_grid
             cols: 2
             rows: 2
-            height: root.ids.score.texture_size[1] * 2
             size_hint_y: None
 
             Label:
@@ -168,8 +168,8 @@
 
         ScrollView:
             do_scroll_x: False
-            height: root.ids.score.texture_size[1] * 8
-            size_hint_y: None
+            #height: root.ids.score.texture_size[1] * 8
+            #size_hint_y: None
 
             Label:
                 text: "QUESTION"
@@ -198,6 +198,7 @@
             text_size: self.width, None
             valign: 'middle'
             padding_x: 20
+            size_hint_y: None
             on_release:
                 root.select_answer(0)
 
@@ -207,6 +208,7 @@
             text_size: self.width, None
             valign: 'middle'
             padding_x: 20
+            size_hint_y: None
             on_release:
                 root.select_answer(1)
 
@@ -216,6 +218,7 @@
             text_size: self.width, None
             valign: 'middle'
             padding_x: 20
+            size_hint_y: None
             on_release:
                 root.select_answer(2)
 
@@ -225,6 +228,7 @@
             text_size: self.width, None
             valign: 'middle'
             padding_x: 20
+            size_hint_y: None
             on_release:
                 root.select_answer(3)
 
@@ -362,7 +366,7 @@
 
                     Slider:
                         id: font_size_slider
-                        min: 10
+                        min: 20
                         max: 30
                         on_value: root.set_font_size(self.value)
                         height: '10sp'

@@ -3,6 +3,7 @@ Main file, this is the file that buildozer runs (this is the application entrypo
 """
 
 import kivy
+import defaults
 
 kivy.require('2.1.0')
 
@@ -21,8 +22,8 @@ class TriviaApp(App):
     """
     This is the application that kivy builds.
     """
-    default_font_size = StringProperty(str(DEFAULT_FONT_SIZE) + "sp")
-    default_font_name = DEFALUT_FONT_NAME
+    font_size = StringProperty(str(FONT_SIZE) + "sp")
+    font_name = FONT_NAME
     player_name = 'no_name'
     background_src = StringProperty(BACKGROUND_LIGHT_SRC)
     font_color = ListProperty(FONT_COLOR_LIGHT)
@@ -59,6 +60,7 @@ class TriviaApp(App):
             if manager.current == 'settings':
                 manager.current = 'main'
 
+
         return True
 
     def btn_pressed(self):
@@ -88,6 +90,7 @@ if __name__ == '__main__':
     LabelBase.register(name="Arial", fn_regular="fonts/arial.ttf")
     LabelBase.register(name="Linux-Biolinum", fn_regular="fonts/Linux-Biolinum.ttf")
     LabelBase.register(name="DavidLibre-Regular", fn_regular="fonts/DavidLibre-Regular.ttf")
+    LabelBase.register(name="Calibri", fn_regular="fonts/Calibri.ttf")
 
     # Run the application.
     app.run()

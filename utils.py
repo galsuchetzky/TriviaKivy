@@ -7,6 +7,7 @@ import string
 import json
 import certifi
 import urllib
+import defaults
 
 kivy.require('2.1.0')
 
@@ -15,7 +16,6 @@ from kivy.core.window import Window
 from kivy.network.urlrequest import UrlRequest
 from kivy.app import App
 
-from defaults import *
 from datetime import date
 from pathlib import Path
 from collections import defaultdict
@@ -49,8 +49,8 @@ def get_str_pixel_height():
     """
     Calculates the pixel height of the strings.
     """
-    return Label(font_name=DEFALUT_FONT_NAME,
-                 font_size=kivy.metrics.sp(DEFAULT_FONT_SIZE)).get_extents('test')[1]
+    return Label(font_name=defaults.FONT_NAME,
+                 font_size=kivy.metrics.sp(defaults.FONT_SIZE)).get_extents('test')[1]
 
 
 def fix_string(s):
@@ -67,8 +67,8 @@ def fix_string(s):
 
     for w in s.split():
         new_str_width = get_str_pixel_width(' '.join(tmp + [w]),
-                                            font_name=DEFALUT_FONT_NAME,
-                                            font_size=kivy.metrics.sp(DEFAULT_FONT_SIZE))
+                                            font_name=defaults.FONT_NAME,
+                                            font_size=kivy.metrics.sp(defaults.FONT_SIZE))
         if new_str_width > acceptable_width:
             strings.append(tmp[:])
             tmp = []
@@ -151,7 +151,7 @@ def get_questions_from_server(question_file_name, callback):
     # Request the questions file from the server.
     # Note that we use certifi things and verify otherwise it will not work on phone.
     # We use start as callback to start the game when the questions file is returned.
-    url = f'http://127.0.0.1:5000/questions/{question_file_name}'
+    url = defaults.SERVER_NAME + f'/questions/{question_file_name}'
     UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=callback)
 
 
@@ -159,7 +159,7 @@ def get_scores_from_server(callback):
     """
     Gets the scores from the server and calls the callback upon receive.
     """
-    url = f'http://127.0.0.1:5000/getscores'
+    url = defaults.SERVER_NAME + '/getscores'
     UrlRequest(url, ca_file=certifi.where(), verify=True, on_success=callback)
 
 
@@ -174,7 +174,7 @@ def post_score(score, mode):
     headers = {'Content-type': 'application/x-www-form-urlencoded',
                'Accept': 'text/plain'}
 
-    url = 'http://10.0.0.7:5000/postscore'
+    url = defaults.SERVER_NAME + '/postscore'
 
     req = UrlRequest(url, req_body=params, req_headers=headers, ca_file=certifi.where(), verify=True)
 

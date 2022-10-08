@@ -87,6 +87,13 @@ class GameWindow(Screen):
         if game_music.status != 'play':
             game_music.play()
 
+        # Fix heights
+        row_height = utils.get_str_pixel_height()
+        for i in range(4):
+            self.ids['ans' + str(i)].height = 3 * row_height
+
+        self.ids.info_grid.height = 3 * row_height
+
         # Initialize the game properties to be ready for starting.
         self.init_game_properties()
 

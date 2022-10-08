@@ -2,8 +2,8 @@ from kivy.core.audio import SoundLoader
 from enum import Enum
 
 # Constants
-DEFAULT_FONT_SIZE = 25
-DEFALUT_FONT_NAME = "DavidLibre-Regular"
+FONT_SIZE = 25
+FONT_NAME = "Calibri"
 BACKGROUND_LIGHT_SRC = 'images/background_light_mode.png'
 BACKGROUND_DARK_SRC = 'images/background_dark_mode.png'
 BUTTON_BACKGROUND_NORMAL = "images/button_background_normal.png"
@@ -13,6 +13,8 @@ WRONG_ANSWER_BACKGROUND = "images/wrong_answer_background.png"
 FONT_COLOR_DARK = (1, 1, 1, 1)  # White
 FONT_COLOR_LIGHT = (0, 0, 0, 1)  # Black
 MASTER_VOLUME = 0.5
+
+SERVER_NAME = "http://triviakivy-env.eba-r2pdq2p3.us-east-1.elasticbeanstalk.com/"
 
 # Sounds
 click_sound = SoundLoader.load('sounds/Click_Audio.wav')
